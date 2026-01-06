@@ -1,0 +1,60 @@
+name: "Gestão Cidadã"
+description: "Platform for urban problem management connecting citizens, municipalities and admins"
+owner: "FranciscoCarlos1"
+homepage: "https://github.com/FranciscoCarlos1/gestao-cidada"
+
+topics:
+  - laravel
+  - kotlin
+  - jetpack-compose
+  - android
+  - tailwind-css
+  - postgresql
+  - docker
+  - rest-api
+  - sanctum
+  - civic-tech
+
+labels:
+  backend:
+    color: "0366d6"
+    description: "Laravel API and backend services"
+  android:
+    color: "3ddc84"
+    description: "Android app (Jetpack Compose)"
+  web:
+    color: "ffc107"
+    description: "Web dashboard and frontend"
+  database:
+    color: "336791"
+    description: "PostgreSQL migrations and schemas"
+  ci-cd:
+    color: "ff6b6b"
+    description: "CI/CD pipelines and workflows"
+  documentation:
+    color: "6f42c1"
+    description: "Documentation and guides"
+  bug:
+    color: "d73a49"
+    description: "Something isn't working"
+  enhancement:
+    color: "a2eeef"
+    description: "New feature or request"
+  help-wanted:
+    color: "0075ca"
+    description: "Extra attention is needed"
+
+milestones:
+  - name: "MVP v0.1"
+    description: "Initial release with core features"
+    state: "closed"
+  - name: "v0.2 - Admin Panel"
+    description: "Advanced admin features and reporting"
+    state: "open"
+  - name: "v1.0 - Production"
+    description: "Stable production release"
+    state: "open"
+
+code_of_conduct:
+  file: "CODE_OF_CONDUCT.md"
+  license: "CC0-1.0"
