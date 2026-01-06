@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,6 +27,7 @@ fun MainScreen(
     onNavigateToForm: (LatLng?) -> Unit,
     onNavigateToList: () -> Unit,
     onNavigateToAdmin: () -> Unit,
+    onNavigateToAbout: () -> Unit,
     onLogout: () -> Unit,
     userRole: String,
     viewModel: MapViewModel = viewModel()
@@ -42,6 +44,9 @@ fun MainScreen(
             TopAppBar(
                 title = { Text("Mapa - Toque para marcar local") },
                 actions = {
+                    IconButton(onClick = onNavigateToAbout) {
+                        Icon(Icons.Default.Info, contentDescription = "Sobre")
+                    }
                     if (userRole == "admin" || userRole == "super") {
                         IconButton(onClick = onNavigateToAdmin) {
                             Icon(Icons.Default.Settings, contentDescription = "Admin")

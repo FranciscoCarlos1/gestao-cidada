@@ -73,6 +73,9 @@ fun AppNavigation() {
                 onNavigateToAdmin = {
                     navController.navigate("admin")
                 },
+                onNavigateToAbout = {
+                    navController.navigate("about")
+                },
                 onLogout = {
                     TokenManager.clearToken()
                     TokenManager.clearUserRole()
@@ -107,6 +110,14 @@ fun AppNavigation() {
 
         composable("admin") {
             AdminScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable("about") {
+            AboutScreen(
                 onNavigateBack = {
                     navController.popBackStack()
                 }
