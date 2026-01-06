@@ -1,5 +1,8 @@
 # Projeto: Gestão Cidadã
 
+Autor e créditos
+- Projeto feito e desenvolvido por FRANCISCO CARLOS DE SOUSA, Analista de Sistema pela Estácio, Servidor Público: Técnico de Tecnologia da Informação no IFC - São Bento do Sul.
+
 ## 📋 Visão Geral
 
 **Gestão Cidadã** é uma plataforma integrada para gerenciamento de problemas urbanos, conectando cidadãos, prefeituras e administradores através de uma API moderna com web e mobile.

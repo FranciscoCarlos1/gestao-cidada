@@ -171,5 +171,9 @@
                 </div>
             </section>
         </div>
+        <footer class="max-w-6xl mx-auto px-6 pb-8 pt-4 text-xs text-slate-400">
+            Projeto feito e desenvolvido por
+            <span class="font-semibold text-slate-300">FRANCISCO CARLOS DE SOUSA</span> — Analista de Sistema pela Estácio; Servidor Público: Técnico de Tecnologia da Informação no IFC - São Bento do Sul.
+        </footer>
     </body>
 </html>
