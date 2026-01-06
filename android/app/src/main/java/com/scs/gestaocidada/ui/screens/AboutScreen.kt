@@ -52,7 +52,7 @@ fun AboutScreen(
                 style = MaterialTheme.typography.bodyMedium,
             )
             Text(
-                text = "Servidor Público: Técnico de Tecnologia da Informação no IFC - São Bento do Sul",
+                text = "Servidor Público: Técnico de Tecnologia da Informação no INSTITUTO FEDERAL CATARINENSE - São Bento do Sul",
                 style = MaterialTheme.typography.bodyMedium,
             )
             Divider()

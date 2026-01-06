@@ -1,7 +1,7 @@
 # Gestão Cidadã (Laravel + Android)
 
 > Projeto feito e desenvolvido por
-> FRANCISCO CARLOS DE SOUSA — Analista de Sistema pela Estácio; Servidor Público: Técnico de Tecnologia da Informação no IFC - São Bento do Sul.
+> FRANCISCO CARLOS DE SOUSA — Analista de Sistema pela Estácio; Servidor Público: Técnico de Tecnologia da Informação no INSTITUTO FEDERAL CATARINENSE - São Bento do Sul.
 
 Projeto completo (código-fonte) do **Gestão Cidadã**:
 - **Backend API** em **Laravel** (PostgreSQL, autenticação via Sanctum, perfis: `super`, `admin`, `cidadao`)

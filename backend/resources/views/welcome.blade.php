@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Gestão Cidadã — Desenvolvido por FRANCISCO CARLOS DE SOUSA</title>
-        <meta name="author" content="FRANCISCO CARLOS DE SOUSA — Analista de Sistema (Estácio); Técnico de Tecnologia da Informação no IFC - São Bento do Sul">
+        <meta name="author" content="FRANCISCO CARLOS DE SOUSA — Analista de Sistema (Estácio); Técnico de Tecnologia da Informação no INSTITUTO FEDERAL CATARINENSE - São Bento do Sul">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -156,7 +156,7 @@
                             <p class="text-xs uppercase tracking-[0.25em] text-rose-600">4. Fila do admin</p>
                             <h2 class="text-xl font-semibold">Listar com paginação</h2>
                             <p class="text-sm text-slate-600">Use um usuário admin com Sanctum para ver todos. Admin comum limita à prefeitura.</p>
-                            <p class="mt-1 text-[11px] text-slate-500">Créditos: <span class="font-medium text-slate-700">FRANCISCO CARLOS DE SOUSA</span> — Analista de Sistema (Estácio), TTI no IFC - São Bento do Sul.</p>
+                            <p class="mt-1 text-[11px] text-slate-500">Créditos: <span class="font-medium text-slate-700">FRANCISCO CARLOS DE SOUSA</span> — Analista de Sistema (Estácio), TTI no INSTITUTO FEDERAL CATARINENSE - São Bento do Sul.</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <select data-admin-filter-status class="rounded-lg border border-slate-200 px-3 py-2 text-sm">
@@ -175,7 +175,7 @@
         </div>
         <footer class="max-w-6xl mx-auto px-6 pb-8 pt-4 text-xs text-slate-400">
             Projeto feito e desenvolvido por
-            <span class="font-semibold text-slate-300">FRANCISCO CARLOS DE SOUSA</span> — Analista de Sistema pela Estácio; Servidor Público: Técnico de Tecnologia da Informação no IFC - São Bento do Sul.
+            <span class="font-semibold text-slate-300">FRANCISCO CARLOS DE SOUSA</span> — Analista de Sistema pela Estácio; Servidor Público: Técnico de Tecnologia da Informação no INSTITUTO FEDERAL CATARINENSE - São Bento do Sul.
         </footer>
     </body>
 </html>

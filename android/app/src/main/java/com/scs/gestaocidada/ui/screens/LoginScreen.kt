@@ -107,7 +107,7 @@ fun LoginScreen(
         Divider()
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Projeto desenvolvido por FRANCISCO CARLOS DE SOUSA — Analista de Sistema (Estácio); TTI no IFC - São Bento do Sul",
+            text = "Projeto desenvolvido por FRANCISCO CARLOS DE SOUSA — Analista de Sistema (Estácio); TTI no INSTITUTO FEDERAL CATARINENSE - São Bento do Sul",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
