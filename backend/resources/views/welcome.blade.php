@@ -155,6 +155,7 @@
                             <p class="text-xs uppercase tracking-[0.25em] text-rose-600">4. Fila do admin</p>
                             <h2 class="text-xl font-semibold">Listar com paginação</h2>
                             <p class="text-sm text-slate-600">Use um usuário admin com Sanctum para ver todos. Admin comum limita à prefeitura.</p>
+                            <p class="mt-1 text-[11px] text-slate-500">Créditos: <span class="font-medium text-slate-700">FRANCISCO CARLOS DE SOUSA</span> — Analista de Sistema (Estácio), TTI no IFC - São Bento do Sul.</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <select data-admin-filter-status class="rounded-lg border border-slate-200 px-3 py-2 text-sm">
