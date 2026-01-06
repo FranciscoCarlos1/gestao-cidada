@@ -131,3 +131,28 @@ Se for em aparelho físico, use o IP da sua máquina na rede.
   ```
   O GitHub Actions irá construir e anexar o APK ao release.
 
+**Assinar APKs (opcional)**
+
+Se quiser que o workflow assine o APK automaticamente e anexe a versão assinada ao Release, faça o seguinte:
+
+1. Gere um keystore localmente (ou use o seu existente):
+
+```bash
+keytool -genkeypair -v -keystore release.keystore -alias mykey -keyalg RSA -keysize 2048 -validity 10000
+```
+
+2. Encode o keystore em base64 e adicione como Secret no repositório (Settings → Secrets → Actions):
+
+```bash
+base64 release.keystore | tr -d '\n'  # copie o output
+```
+
+Crie os seguintes Secrets:
+- `KEYSTORE_BASE64` — conteúdo base64 do keystore
+- `KEYSTORE_PASSWORD` — senha do keystore
+- `KEY_ALIAS` — alias da chave (ex.: `mykey`)
+- `KEY_PASSWORD` — senha da chave (pode ser igual à do keystore)
+
+Após adicionar os secrets, crie/empurre uma tag `v*` (ex.: `v1.0.1`) e o workflow `sign-and-attach.yml` irá assinar o APK e anexá-lo ao Release.
+
+
