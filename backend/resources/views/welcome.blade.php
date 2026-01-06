@@ -4,7 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>Gestão Cidadã — Desenvolvido por FRANCISCO CARLOS DE SOUSA</title>
+        <meta name="author" content="FRANCISCO CARLOS DE SOUSA — Analista de Sistema (Estácio); Técnico de Tecnologia da Informação no IFC - São Bento do Sul">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
