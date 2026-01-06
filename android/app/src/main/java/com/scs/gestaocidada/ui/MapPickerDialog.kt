@@ -16,8 +16,14 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import android.Manifest
+import android.content.pm.PackageManager
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -52,6 +58,28 @@ fun MapPickerDialog(
 
     var centerLat by remember { mutableStateOf(initialLat ?: -26.2493) } // SBS aprox.
     var centerLng by remember { mutableStateOf(initialLng ?: -49.3831) }
+    val scope = rememberCoroutineScope()
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { granted: Boolean ->
+        if (granted && fusedLocationClient != null) {
+            scope.launch {
+                try {
+                    val loc = suspendCancellableCoroutine<android.location.Location?> { cont ->
+                        fusedLocationClient.lastLocation
+                            .addOnSuccessListener { cont.resume(it) }
+                            .addOnFailureListener { cont.resume(null) }
+                    }
+                    if (loc != null) {
+                        centerLat = loc.latitude
+                        centerLng = loc.longitude
+                    }
+                } catch (_: Exception) {
+                }
+            }
+        }
+    }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -133,22 +161,24 @@ fun MapPickerDialog(
                     if (fusedLocationClient != null) {
                         FloatingActionButton(
                             onClick = {
-                                // tenta obter a última localização e centralizar
-                                // lançamos um efeito para usar coroutines
-                                LaunchedEffect(Unit) {
-                                    try {
-                                        val loc = suspendCancellableCoroutine<android.location.Location?> { cont ->
-                                            fusedLocationClient.lastLocation
-                                                .addOnSuccessListener { cont.resume(it) }
-                                                .addOnFailureListener { cont.resume(null) }
+                                val granted = ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                                if (granted) {
+                                    scope.launch {
+                                        try {
+                                            val loc = suspendCancellableCoroutine<android.location.Location?> { cont ->
+                                                fusedLocationClient.lastLocation
+                                                    .addOnSuccessListener { cont.resume(it) }
+                                                    .addOnFailureListener { cont.resume(null) }
+                                            }
+                                            if (loc != null) {
+                                                centerLat = loc.latitude
+                                                centerLng = loc.longitude
+                                            }
+                                        } catch (_: Exception) {
                                         }
-                                        if (loc != null) {
-                                            centerLat = loc.latitude
-                                            centerLng = loc.longitude
-                                        }
-                                    } catch (_: Exception) {
-                                        // ignorar: fallback silencioso
                                     }
+                                } else {
+                                    permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
                                 }
                             },
                             modifier = Modifier
