@@ -115,3 +115,19 @@ Se for em aparelho físico, use o IP da sua máquina na rede.
   - `GET /api/geocode/reverse?lat=-26.25&lng=-49.38`
 - A API faz **reverse geocoding** via **Nominatim (OpenStreetMap)** e devolve bairro/rua/número/CEP/cidade/UF (quando disponível).
 - Os campos podem ser ajustados manualmente antes de enviar.
+
+---
+
+**CI / Releases**
+
+- Este repositório inclui workflows GitHub Actions:
+  - `.github/workflows/android-build.yml` — executa `assembleDebug` na branch `main` e publica o APK debug como artifact.
+  - `.github/workflows/release-on-tag.yml` — ao criar um tag `v*` (ex.: `v1.0.0`) o workflow compila o APK e cria um Release com o APK anexado.
+
+- Para criar um release manualmente via tag:
+  ```bash
+  git tag v1.0.0
+  git push origin v1.0.0
+  ```
+  O GitHub Actions irá construir e anexar o APK ao release.
+

@@ -122,11 +122,10 @@ fun MapPickerDialog(
 
                     // PIN fixo desenhado sobre o mapa (compose) — sempre no centro
                     Icon(
-                        painter = painterResource(android.R.drawable.ic_menu_mylocation),
+                        painter = painterResource(id = com.scs.gestaocidada.R.drawable.ic_pin),
                         contentDescription = null,
-                        tint = Color.Red,
                         modifier = Modifier
-                            .size(48.dp)
+                            .size(56.dp)
                             .align(Alignment.Center)
                     )
 
