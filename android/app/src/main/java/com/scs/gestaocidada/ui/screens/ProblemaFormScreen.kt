@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.maps.model.LatLng
-import com.scs.gestaocidada.data.models.Prefeitura
+import com.scs.gestaocidada.data.models.PrefeituraDto
 import com.scs.gestaocidada.ui.viewmodels.ProblemaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,7 +27,7 @@ fun ProblemaFormScreen(
     var rua by remember { mutableStateOf("") }
     var numero by remember { mutableStateOf("") }
     var cep by remember { mutableStateOf("") }
-    var selectedPrefeitura by remember { mutableStateOf<Prefeitura?>(null) }
+    var selectedPrefeitura by remember { mutableStateOf<PrefeituraDto?>(null) }
     var isLoading by remember { mutableStateOf(false) }
     var successMessage by remember { mutableStateOf<String?>(null) }
     var errorMessage by remember { mutableStateOf<String?>(null) }

@@ -28,7 +28,7 @@
                     <p class="text-base text-slate-300 max-w-2xl">Use esta página única para exercitar o backend (Laravel + Sanctum). Crie um token, reporte problemas de rua, consulte seus registros e navegue na fila do administrador sem precisar de Postman.</p>
                     <div class="inline-flex gap-2 text-xs text-amber-200 bg-amber-500/10 border border-amber-400/30 px-3 py-2 rounded-md">Endpoints expostos em /api/* · Banco já migrado · Prefeituras vêm da API</div>
                 </div>
-                <div class="bg-gradient-to-br from-slate-900 to-slate-800 border border-white/10 rounded-xl p-4 w-full lg:w-[340px] shadow-lg">
+                <div class="bg-linear-to-br from-slate-900 to-slate-800 border border-white/10 rounded-xl p-4 w-full lg:w-80 shadow-lg">
                     <p class="text-sm font-semibold mb-2">Perfis cobertos</p>
                     <div class="grid grid-cols-2 gap-3 text-sm text-slate-200">
                         <div class="p-3 rounded-lg bg-white/5 border border-white/10">Cidadão: registra e consulta.</div>
