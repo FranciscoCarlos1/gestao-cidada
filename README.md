@@ -1,5 +1,8 @@
 # Gestão Cidadã (Laravel + Android)
 
+[![CI](https://github.com/FranciscoCarlos1/gestao-cidada/actions/workflows/ci.yml/badge.svg)](https://github.com/FranciscoCarlos1/gestao-cidada/actions/workflows/ci.yml)
+[![Android Release](https://github.com/FranciscoCarlos1/gestao-cidada/actions/workflows/android-release.yml/badge.svg)](https://github.com/FranciscoCarlos1/gestao-cidada/actions/workflows/android-release.yml)
+
 > Projeto feito e desenvolvido por
 > FRANCISCO CARLOS DE SOUSA — Analista de Sistema pela Estácio; Servidor Público: Técnico de Tecnologia da Informação no INSTITUTO FEDERAL CATARINENSE - São Bento do Sul.
 
