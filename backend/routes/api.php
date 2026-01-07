@@ -10,6 +10,7 @@ use App\Http\Controllers\ProblemaController;
 use App\Http\Controllers\AdminProblemaController;
 use App\Http\Controllers\GeocodeController;
 use App\Http\Controllers\AuditLogController;
+use App\Http\Controllers\CepController;
 
 // ======================
 // Auth (Public)
@@ -95,3 +96,5 @@ Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
         Route::get('/audit-logs', [AuditLogController::class, 'index']);
         Route::get('/audit-logs/{auditLog}', [AuditLogController::class, 'show']);
     });
+
+});
