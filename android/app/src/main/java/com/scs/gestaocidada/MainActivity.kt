@@ -41,24 +41,82 @@ fun AppNavigation() {
     var userRole by remember { mutableStateOf(TokenManager.getUserRole()) }
     val isLoggedIn = TokenManager.getToken() != null
 
-    val startDestination = if (isLoggedIn) "main" else "login"
+    // Rota inicial baseada em login
+    val startDestination = if (isLoggedIn) {
+        when (userRole) {
+            "super" -> "super_admin"
+            "admin" -> "admin"
+            "cidadao" -> "cidadao"
+            else -> "anonimo"
+        }
+    } else "anonimo"
 
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
+        // Tela Anônimo (visitante)
+        composable("anonimo") {
+            AnonimoScreen(
+                onNavigateToLogin = {
+                    navController.navigate("login") {
+                        popUpTo("anonimo") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        // Tela de Login
         composable("login") {
             LoginScreen(
                 onLoginSuccess = { role ->
                     userRole = role
-                    navController.navigate("main") {
+                    val destination = when (role) {
+                        "super" -> "super_admin"
+                        "admin" -> "admin"
+                        "cidadao" -> "cidadao"
+                        else -> "anonimo"
+                    }
+                    navController.navigate(destination) {
                         popUpTo("login") { inclusive = true }
                     }
                 }
             )
         }
 
-        composable("main") {
+        // Dashboard Cidadão
+        composable("cidadao") {
+            CidadaoScreen(
+                onNavigateToMap = {
+                    navController.navigate("map")
+                },
+                onNavigateToForm = { location ->
+                    navController.currentBackStackEntry?.savedStateHandle?.set(
+                        "selected_location",
+                        location
+                    )
+                    navController.navigate("form")
+                },
+                onNavigateToMyProblemas = {
+                    navController.navigate("my_problemas")
+                },
+                onNavigateTo2FA = {
+                    navController.navigate("two_factor")
+                },
+                onNavigateToAbout = {
+                    navController.navigate("about")
+                },
+                onLogout = {
+                    TokenManager.clearAll()
+                    navController.navigate("anonimo") {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        // Tela do Mapa (para escolher localização)
+        composable("map") {
             MainScreen(
                 onNavigateToForm = { location ->
                     navController.currentBackStackEntry?.savedStateHandle?.set(
@@ -68,18 +126,18 @@ fun AppNavigation() {
                     navController.navigate("form")
                 },
                 onNavigateToList = {
-                    navController.navigate("list")
+                    navController.navigate("my_problemas")
                 },
                 onNavigateToAdmin = {
-                    navController.navigate("admin")
+                    if (userRole == "admin") navController.navigate("admin")
+                    else if (userRole == "super") navController.navigate("super_admin")
                 },
                 onNavigateToAbout = {
                     navController.navigate("about")
                 },
                 onLogout = {
-                    TokenManager.clearToken()
-                    TokenManager.clearUserRole()
-                    navController.navigate("login") {
+                    TokenManager.clearAll()
+                    navController.navigate("anonimo") {
                         popUpTo(0) { inclusive = true }
                     }
                 },
@@ -87,6 +145,7 @@ fun AppNavigation() {
             )
         }
 
+        // Formulário de Problema
         composable("form") {
             val location = navController.previousBackStackEntry
                 ?.savedStateHandle
@@ -100,7 +159,8 @@ fun AppNavigation() {
             )
         }
 
-        composable("list") {
+        // Meus Problemas (Cidadão)
+        composable("my_problemas") {
             MeusProblemasScreen(
                 onNavigateBack = {
                     navController.popBackStack()
@@ -108,6 +168,25 @@ fun AppNavigation() {
             )
         }
 
+        // 2FA (Cidadão)
+        composable("two_factor") {
+            TwoFactorScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        // 2FA (Cidadão)
+        composable("two_factor") {
+            TwoFactorScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        // Admin Prefeitura
         composable("admin") {
             AdminScreen(
                 onNavigateBack = {
@@ -116,6 +195,16 @@ fun AppNavigation() {
             )
         }
 
+        // Super Admin
+        composable("super_admin") {
+            SuperAdminScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        // Sobre
         composable("about") {
             AboutScreen(
                 onNavigateBack = {

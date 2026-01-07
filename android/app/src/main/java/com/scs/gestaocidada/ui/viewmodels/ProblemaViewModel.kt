@@ -23,6 +23,9 @@ class ProblemaViewModel : ViewModel() {
     private val _meusProblemas = MutableStateFlow<List<ProblemaDto>>(emptyList())
     val meusProblemas: StateFlow<List<ProblemaDto>> = _meusProblemas.asStateFlow()
 
+    private val _problemasPublicos = MutableStateFlow<List<ProblemaDto>>(emptyList())
+    val problemasPublicos: StateFlow<List<ProblemaDto>> = _problemasPublicos.asStateFlow()
+
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
@@ -93,6 +96,24 @@ class ProblemaViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _errorMessage.value = "Erro ao carregar problemas: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun loadProblemasPublicos(status: String? = null, prefeituraId: Long? = null) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            _errorMessage.value = null
+            try {
+                val result = ApiClient.api.problemas(
+                    status = status,
+                    prefeituraId = prefeituraId
+                )
+                _problemasPublicos.value = result
+            } catch (e: Exception) {
+                _errorMessage.value = "Erro ao carregar problemas públicos: ${e.message}"
             } finally {
                 _isLoading.value = false
             }

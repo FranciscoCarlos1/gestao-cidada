@@ -145,7 +145,7 @@ class AdminViewModel : ViewModel() {
         }
     }
 
-    fun toggleUserStatus(userId: Long, newStatus: String) {
+    fun toggleUserStatus(userId: Long) {
         _isLoading.value = true
         _errorMessage.value = null
         val token = TokenManager.getToken()
@@ -156,6 +156,10 @@ class AdminViewModel : ViewModel() {
         }
         viewModelScope.launch {
             try {
+                // Encontra o usuário e alterna o status
+                val currentUser = _users.value.find { it.id == userId }
+                val newStatus = if (currentUser?.status == "suspended") "active" else "suspended"
+                
                 ApiClient.api.toggleUserStatus(
                     id = userId,
                     req = ToggleStatusRequest(status = newStatus),
@@ -165,6 +169,30 @@ class AdminViewModel : ViewModel() {
                 loadUsers()
             } catch (e: Exception) {
                 _errorMessage.value = "Erro ao atualizar status: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun resetUserPassword(userId: Long) {
+        _isLoading.value = true
+        _errorMessage.value = null
+        val token = TokenManager.getToken()
+        if (token == null) {
+            _errorMessage.value = "Token de autenticação não encontrado"
+            _isLoading.value = false
+            return
+        }
+        viewModelScope.launch {
+            try {
+                ApiClient.api.resetPassword(
+                    id = userId,
+                    auth = "Bearer $token"
+                )
+                _successMessage.value = "Senha resetada com sucesso"
+            } catch (e: Exception) {
+                _errorMessage.value = "Erro ao resetar senha: ${e.message}"
             } finally {
                 _isLoading.value = false
             }

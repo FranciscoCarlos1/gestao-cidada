@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.scs.gestaocidada.data.models.Problema
+import com.scs.gestaocidada.data.models.ProblemaDto
 import com.scs.gestaocidada.ui.viewmodels.AdminViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -177,7 +177,7 @@ fun AdminScreen(
 
 @Composable
 fun AdminProblemaCard(
-    problema: Problema,
+    problema: ProblemaDto,
     onStatusChange: (String) -> Unit
 ) {
     val dateFormat = remember { SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("pt", "BR")) }

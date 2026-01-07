@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.scs.gestaocidada.data.models.Problema
+import com.scs.gestaocidada.data.models.ProblemaDto
 import com.scs.gestaocidada.ui.viewmodels.ProblemaViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -109,7 +109,7 @@ fun MeusProblemasScreen(
 }
 
 @Composable
-fun ProblemaCard(problema: Problema) {
+fun ProblemaCard(problema: ProblemaDto) {
     val dateFormat = remember { SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("pt", "BR")) }
     
     val statusColor = when (problema.status) {
@@ -172,13 +172,13 @@ fun ProblemaCard(problema: Problema) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "📍 ${problema.bairro}${problema.cidade?.let { ", $it" } ?: ""}",
+                    text = "📍 ${problema.bairro ?: ""}${problema.cidade?.let { ", $it" } ?: ""}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                problema.created_at?.let { createdAt ->
+                problema.createdAt?.let { createdAt ->
                     Text(
-                        text = dateFormat.format(createdAt),
+                        text = createdAt.substring(0, 16.coerceAtMost(createdAt.length)), // Data e hora
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
