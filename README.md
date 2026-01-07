@@ -126,39 +126,23 @@ Se for em aparelho físico, use o IP da sua máquina na rede.
 
 **CI / Releases**
 
-- Este repositório inclui workflows GitHub Actions:
-  - `.github/workflows/android-build.yml` — executa `assembleDebug` na branch `main` e publica o APK debug como artifact.
-  - `.github/workflows/release-on-tag.yml` — ao criar um tag `v*` (ex.: `v1.0.0`) o workflow compila o APK e cria um Release com o APK anexado.
+- Workflows ativos:
+  - `.github/workflows/ci.yml` — pipeline consolidado: testa Backend (Laravel + Postgres) e builda Android (Debug), publica APK como artifact.
+  - `.github/workflows/android-release.yml` — workflow manual (workflow_dispatch) para gerar APK Release; se segredos de assinatura estiverem configurados, assina e publica o APK assinado.
 
-- Para criar um release manualmente via tag:
+- Para executar o build de Release manualmente:
+  1) Vá em Actions → Android Release → Run workflow
+  2) (Opcional) Configure segredos para assinatura antes de rodar:
+     - `ANDROID_KEYSTORE_BASE64`
+     - `ANDROID_KEYSTORE_PASSWORD`
+     - `ANDROID_KEY_ALIAS`
+     - `ANDROID_KEY_PASSWORD`
+
+- Gerar keystore local (opcional):
   ```bash
-  git tag v1.0.0
-  git push origin v1.0.0
+  keytool -genkeypair -v -keystore release.keystore -alias mykey -keyalg RSA -keysize 2048 -validity 10000
+  base64 release.keystore | tr -d '\n'
   ```
-  O GitHub Actions irá construir e anexar o APK ao release.
-
-**Assinar APKs (opcional)**
-
-Se quiser que o workflow assine o APK automaticamente e anexe a versão assinada ao Release, faça o seguinte:
-
-1. Gere um keystore localmente (ou use o seu existente):
-
-```bash
-keytool -genkeypair -v -keystore release.keystore -alias mykey -keyalg RSA -keysize 2048 -validity 10000
-```
-
-2. Encode o keystore em base64 e adicione como Secret no repositório (Settings → Secrets → Actions):
-
-```bash
-base64 release.keystore | tr -d '\n'  # copie o output
-```
-
-Crie os seguintes Secrets:
-- `KEYSTORE_BASE64` — conteúdo base64 do keystore
-- `KEYSTORE_PASSWORD` — senha do keystore
-- `KEY_ALIAS` — alias da chave (ex.: `mykey`)
-- `KEY_PASSWORD` — senha da chave (pode ser igual à do keystore)
-
-Após adicionar os secrets, crie/empurre uma tag `v*` (ex.: `v1.0.1`) e o workflow `sign-and-attach.yml` irá assinar o APK e anexá-lo ao Release.
+  Cole o conteúdo em `ANDROID_KEYSTORE_BASE64` (Secrets).
 
 
