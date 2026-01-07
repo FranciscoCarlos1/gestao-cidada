@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminProblemaController;
 use App\Http\Controllers\GeocodeController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\CepController;
+use App\Http\Controllers\NotificationController;
 
 // ======================
 // Auth (Public)
@@ -98,3 +99,24 @@ Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
     });
 
 });
+
+// ======================
+// Firebase Cloud Messaging (FCM)
+// ======================
+Route::middleware('auth:sanctum')->group(function () {
+    // Salvar/remover token FCM do usuário
+    Route::post('/fcm/token', [NotificationController::class, 'saveFcmToken']);
+    Route::delete('/fcm/token', [NotificationController::class, 'removeFcmToken']);
+
+    // Notificação de teste
+    Route::post('/notifications/test', [NotificationController::class, 'sendTestNotification']);
+
+    // Enviar notificação sobre um problema específico (admin/prefeitura)
+    Route::post('/problemas/{id}/notify', [NotificationController::class, 'notifyProblemaUpdate'])
+        ->middleware('role:super,admin,prefeitura');
+
+    // Broadcast para todos os cidadãos (admin/prefeitura)
+    Route::post('/notifications/broadcast', [NotificationController::class, 'broadcastNotification'])
+        ->middleware('role:super,admin,prefeitura');
+});
+

@@ -32,6 +32,7 @@ class User extends Authenticatable
         'last_login_at',
         'status',
         'metadata',
+        'fcm_token',
     ];
 
     /**
@@ -42,6 +43,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'fcm_token',
     ];
 
     /**
