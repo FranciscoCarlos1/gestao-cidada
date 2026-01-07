@@ -1,14 +1,11 @@
-name: Laravel (Deprecated)
+name: Laravel (Removed)
 
 on:
-  workflow_dispatch:
-    inputs:
-      note:
-        description: 'Deprecated workflow kept for reference. Use ci.yml.'
-        required: false
+  push:
+    branches: [ never ]
 
 jobs:
   noop:
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'Deprecated: use .github/workflows/ci.yml'
+      - run: echo 'This workflow is disabled. Use .github/workflows/ci.yml'
