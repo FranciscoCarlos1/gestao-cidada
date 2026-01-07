@@ -9,15 +9,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.maps.model.LatLng
+import com.scs.gestaocidada.data.PreferencesManager
 import com.scs.gestaocidada.data.TokenManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CidadaoScreen(
+    preferencesManager: PreferencesManager,
     onNavigateToMap: () -> Unit,
     onNavigateToForm: (LatLng?) -> Unit,
     onNavigateToMyProblemas: () -> Unit,
     onNavigateTo2FA: () -> Unit,
+    onNavigateToSettings: () -> Unit,
     onNavigateToAbout: () -> Unit,
     onLogout: () -> Unit
 ) {
@@ -28,6 +31,9 @@ fun CidadaoScreen(
             TopAppBar(
                 title = { Text("Dashboard - Cidadão") },
                 actions = {
+                    IconButton(onClick = onNavigateToSettings) {
+                        Icon(Icons.Default.Settings, contentDescription = "Configurações")
+                    }
                     IconButton(onClick = onNavigateToAbout) {
                         Icon(Icons.Default.Info, contentDescription = "Sobre")
                     }

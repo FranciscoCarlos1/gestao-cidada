@@ -3,6 +3,9 @@ package com.scs.gestaocidada
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -11,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.gms.maps.model.LatLng
+import com.scs.gestaocidada.data.PreferencesManager
 import com.scs.gestaocidada.data.TokenManager
 import com.scs.gestaocidada.ui.screens.*
 import com.scs.gestaocidada.ui.theme.GestaoCidadaTheme
@@ -21,14 +26,29 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         
         TokenManager.init(this)
+        val preferencesManager = PreferencesManager.getInstance(this)
         
         setContent {
-            GestaoCidadaTheme {
+            val darkMode by preferencesManager.darkModeFlow.collectAsState(initial = isSystemInDarkTheme())
+            val systemUiController = rememberSystemUiController()
+            
+            GestaoCidadaTheme(darkTheme = darkMode) {
+                // Configurar cor da status bar
+                SideEffect {
+                    systemUiController.setSystemBarsColor(
+                        color = if (darkMode) 
+                            androidx.compose.ui.graphics.Color(0xFF121212) 
+                        else 
+                            androidx.compose.ui.graphics.Color(0xFFF5F5F5),
+                        darkIcons = !darkMode
+                    )
+                }
+                
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppNavigation()
+                    AppNavigation(preferencesManager)
                 }
             }
         }
@@ -36,7 +56,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(preferencesManager: PreferencesManager) {
     val navController = rememberNavController()
     var userRole by remember { mutableStateOf(TokenManager.getUserRole()) }
     val isLoggedIn = TokenManager.getToken() != null
@@ -53,7 +73,25 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
+        enterTransition = {
+            fadeIn(animationSpec = tween(300)) + slideInHorizontally(
+                initialOffsetX = { 300 },
+                animationSpec = tween(300)
+            )
+        },
+        exitTransition = {
+            fadeOut(animationSpec = tween(300))
+        },
+        popEnterTransition = {
+            fadeIn(animationSpec = tween(300))
+        },
+        popExitTransition = {
+            fadeOut(animationSpec = tween(300)) + slideOutHorizontally(
+                targetOffsetX = { 300 },
+                animationSpec = tween(300)
+            )
+        }
     ) {
         // Tela Anônimo (visitante)
         composable("anonimo") {
@@ -87,6 +125,7 @@ fun AppNavigation() {
         // Dashboard Cidadão
         composable("cidadao") {
             CidadaoScreen(
+                preferencesManager = preferencesManager,
                 onNavigateToMap = {
                     navController.navigate("map")
                 },
@@ -102,6 +141,9 @@ fun AppNavigation() {
                 },
                 onNavigateTo2FA = {
                     navController.navigate("two_factor")
+                },
+                onNavigateToSettings = {
+                    navController.navigate("settings")
                 },
                 onNavigateToAbout = {
                     navController.navigate("about")
@@ -207,6 +249,16 @@ fun AppNavigation() {
         // Sobre
         composable("about") {
             AboutScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        // Configurações
+        composable("settings") {
+            SettingsScreen(
+                preferencesManager = preferencesManager,
                 onNavigateBack = {
                     navController.popBackStack()
                 }

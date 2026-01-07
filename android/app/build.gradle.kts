@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -45,6 +46,19 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.navigation:navigation-compose:2.8.5")
     implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    // DataStore for preferences
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+    
+    // Animation
+    implementation("androidx.compose.animation:animation:1.7.6")
+    
+    // Firebase Push Notifications
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-messaging-ktx")
+    
+    // Accompanist for system UI controller
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.36.0")
 
     // OSM (OpenStreetMap) MapView
     implementation("org.osmdroid:osmdroid-android:6.1.18")
