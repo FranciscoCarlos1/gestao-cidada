@@ -9,7 +9,7 @@ use App\Http\Controllers\PrefeituraController;
 use App\Http\Controllers\ProblemaController;
 use App\Http\Controllers\AdminProblemaController;
 use App\Http\Controllers\GeocodeController;
-use App\Http\Controllers\CepController;
+use App\Http\Controllers\AuditLogController;
 
 // ======================
 // Auth (Public)
@@ -90,9 +90,8 @@ Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
         Route::delete('/prefeituras/{prefeitura}/webhooks/{webhookId}', [PrefeituraController::class, 'deleteWebhook']);
     });
 
-    // Problemas (admin de prefeitura)
-    Route::middleware('role:admin')->group(function () {
-        Route::get('/problemas', [AdminProblemaController::class, 'index']);
-        Route::patch('/problemas/{id}/status', [AdminProblemaController::class, 'updateStatus']);
+    // Audit Logs (super admin only)
+    Route::middleware('role:super')->group(function () {
+        Route::get('/audit-logs', [AuditLogController::class, 'index']);
+        Route::get('/audit-logs/{auditLog}', [AuditLogController::class, 'show']);
     });
-});
