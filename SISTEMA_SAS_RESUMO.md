@@ -353,7 +353,7 @@ Run on emulator
 
 **FRANCISCO CARLOS DE SOUSA**  
 **Formação**: ANALISTA DE SISTEMAS - Estácio
-**fUNÇÃO/CARGO**: TECNICO DE TECNOLOGIA DA INFORMAÇÃO
+**Função/Cargo**: TÉCNICO DE TECNOLOGIA DA INFORMAÇÃO
 **Instituição**: INSTITUTO FEDERAL CATARINENSE - São Bento do Sul
 
 ---
