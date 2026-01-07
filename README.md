@@ -15,6 +15,16 @@ Projeto completo (código-fonte) do **Gestão Cidadã**:
 
 ---
 
+## Documentação
+
+- Resumo geral: [SISTEMA_SAS_RESUMO.md](SISTEMA_SAS_RESUMO.md)
+- Phase 1 (Backend): [SISTEMA_SAS_PHASE1.md](SISTEMA_SAS_PHASE1.md)
+- Phase 2 (Web SPA): [SISTEMA_SAS_PHASE2.md](SISTEMA_SAS_PHASE2.md)
+- Projeto (visão geral): [PROJECT.md](PROJECT.md)
+- Roadmap: [ROADMAP.md](ROADMAP.md)
+
+---
+
 ## 1) Requisitos
 
 ### Backend
