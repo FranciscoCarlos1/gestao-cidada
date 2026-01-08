@@ -4,7 +4,8 @@
 [![Android Release](https://github.com/FranciscoCarlos1/gestao-cidada/actions/workflows/android-release.yml/badge.svg)](https://github.com/FranciscoCarlos1/gestao-cidada/actions/workflows/android-release.yml)
 
 > Projeto feito e desenvolvido por
-> FRANCISCO CARLOS DE SOUSA — Analista de Sistema pela Estácio; Servidor Público: Técnico de Tecnologia da Informação no INSTITUTO FEDERAL CATARINENSE - São Bento do Sul.
+> FRANCISCO CARLOS DE SOUSA — Analista de Sistemas pela Estácio;
+> Servidor Público: Técnico de Tecnologia da Informação no INSTITUTO FEDERAL CATARINENSE - São Bento do Sul.
 
 Projeto completo (código-fonte) do **Gestão Cidadã**:
 - **Backend API** em **Laravel** (PostgreSQL, autenticação via Sanctum, perfis: `super`, `admin`, `cidadao`)
