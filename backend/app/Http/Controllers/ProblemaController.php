@@ -132,8 +132,3 @@ class ProblemaController extends Controller
         return $accessToken?->tokenable;
     }
 }
-
-        $access = PersonalAccessToken::findToken($token);
-        return $access?->tokenable;
-    }
-}
