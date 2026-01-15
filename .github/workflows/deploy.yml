@@ -1,0 +1,97 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy.yml'
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    name: Deploy Backend to Production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo, pdo_pgsql, mbstring, curl
+          tools: composer:v2
+
+      - name: Build Laravel application
+        working-directory: backend
+        run: |
+          composer install --no-dev --prefer-dist --optimize-autoloader
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
+      - name: Create deployment artifact
+        run: |
+          tar -czf backend-build.tar.gz backend/
+          ls -lh backend-build.tar.gz
+
+      - name: Upload artifact to releases
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-production
+          path: backend-build.tar.gz
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: release-${{ github.run_number }}
+          release_name: Production Release ${{ github.run_number }}
+          body: |
+            ## Backend Production Build
+            - Commit: ${{ github.sha }}
+            - Branch: ${{ github.ref }}
+            - Build number: ${{ github.run_number }}
+            
+            ### Artifacts
+            - backend-production.tar.gz
+            
+            ### Deployment Steps
+            1. Extract: `tar -xzf backend-build.tar.gz`
+            2. Install: `cd backend && composer install --no-dev`
+            3. Migrate: `php artisan migrate --force`
+            4. Cache: `php artisan config:cache && php artisan route:cache`
+          draft: false
+          prerelease: false
+
+  docker-build:
+    runs-on: ubuntu-latest
+    name: Build Docker Images
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub (optional)
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        if: secrets.DOCKERHUB_USERNAME != null
+
+      - name: Build backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: false
+          tags: gestao-cidada:backend-${{ github.run_number }}
+
+      - name: Verify Docker build
+        run: docker build ./backend -t gestao-cidada:backend-test
