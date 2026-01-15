@@ -70,4 +70,4 @@ label{display:block;font-size:12px;opacity:.8;margin-bottom:6px}
   .top{flex-direction:column;align-items:flex-start}
   .nav{width:100%;flex-direction:column;gap:8px}
   .nav > *{width:100%;text-align:center}
-}
+}</style>
