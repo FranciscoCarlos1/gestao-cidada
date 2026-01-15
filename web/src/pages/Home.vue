@@ -19,5 +19,7 @@
         <li><b>Super Admin</b>: administra usuários, prefeituras e auditoria</li>
       </ul>
     </section>
+
+    <!-- Bloco de acesso rápido removido a pedido -->
   </div>
 </template>

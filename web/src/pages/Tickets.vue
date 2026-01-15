@@ -3,7 +3,6 @@
     <div class="card">
       <h2>Solicitações públicas</h2>
       <div class="row">
-        <RouterLink class="btn" to="/novo">Abrir solicitação</RouterLink>
         <button class="btn secondary" @click="load" :disabled="loading">{{ loading ? 'Carregando...' : 'Atualizar' }}</button>
       </div>
     </div>
