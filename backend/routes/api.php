@@ -12,6 +12,10 @@ use App\Http\Controllers\GeocodeController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\CepController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\RoleController as AdminRoleController;
+use App\Http\Controllers\Admin\PrefeituraController as AdminPrefeituraController;
+use App\Http\Controllers\Admin\DashboardController;
 
 // ======================
 // Auth (Public)
@@ -60,49 +64,45 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // ======================
-// Admin: Users & Roles
+// Admin: Users & Roles (Super Admin Only)
 // ======================
-Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
-    // Users (super admin only)
-    Route::middleware('role:super')->group(function () {
-        Route::get('/users', [UserController::class, 'index']);
-        Route::post('/users', [UserController::class, 'store']);
-        Route::get('/users/{user}', [UserController::class, 'show']);
-        Route::patch('/users/{user}', [UserController::class, 'update']);
-        Route::delete('/users/{user}', [UserController::class, 'destroy']);
-        Route::post('/users/{user}/reset-password', [UserController::class, 'resetPassword']);
-        Route::patch('/users/{user}/toggle-status', [UserController::class, 'toggleStatus']);
-    });
+Route::middleware(['auth:sanctum', 'role:super'])->prefix('admin')->group(function () {
+    // Dashboard & Stats
+    Route::get('/dashboard/stats', [DashboardController::class, 'getStats']);
+    Route::get('/activities', [DashboardController::class, 'getRecentActivities']);
 
-    // Roles & Permissions (super admin only)
-    Route::middleware('role:super')->group(function () {
-        Route::get('/roles', [RoleController::class, 'index']);
-        Route::post('/roles', [RoleController::class, 'store']);
-        Route::get('/roles/{role}', [RoleController::class, 'show']);
-        Route::patch('/roles/{role}', [RoleController::class, 'update']);
-        Route::delete('/roles/{role}', [RoleController::class, 'destroy']);
-        Route::get('/permissions', [RoleController::class, 'permissions']);
-        Route::post('/roles/{role}/permissions/{permission}', [RoleController::class, 'grantPermission']);
-        Route::delete('/roles/{role}/permissions/{permission}', [RoleController::class, 'revokePermission']);
-    });
+    // Users Management
+    Route::get('/users', [AdminUserController::class, 'index']);
+    Route::post('/users', [AdminUserController::class, 'store']);
+    Route::get('/users/{user}', [AdminUserController::class, 'show']);
+    Route::put('/users/{user}', [AdminUserController::class, 'update']);
+    Route::delete('/users/{user}', [AdminUserController::class, 'destroy']);
+    Route::patch('/users/{user}/status', [AdminUserController::class, 'toggleStatus']);
 
-    // Prefeituras (super admin only)
-    Route::middleware('role:super')->group(function () {
-        Route::post('/prefeituras', [PrefeituraController::class, 'store']);
-        Route::get('/prefeituras/{prefeitura}', [PrefeituraController::class, 'show']);
-        Route::patch('/prefeituras/{prefeitura}', [PrefeituraController::class, 'update']);
-        Route::delete('/prefeituras/{prefeitura}', [PrefeituraController::class, 'destroy']);
-        Route::get('/prefeituras/{prefeitura}/webhooks', [PrefeituraController::class, 'webhooks']);
-        Route::post('/prefeituras/{prefeitura}/webhooks', [PrefeituraController::class, 'createWebhook']);
-        Route::delete('/prefeituras/{prefeitura}/webhooks/{webhookId}', [PrefeituraController::class, 'deleteWebhook']);
-    });
+    // Roles & Permissions
+    Route::get('/roles', [AdminRoleController::class, 'index']);
+    Route::post('/roles', [AdminRoleController::class, 'store']);
+    Route::get('/roles/{role}', [AdminRoleController::class, 'show']);
+    Route::put('/roles/{role}', [AdminRoleController::class, 'update']);
+    Route::delete('/roles/{role}', [AdminRoleController::class, 'destroy']);
+    Route::get('/permissions', [AdminRoleController::class, 'listPermissions']);
+    Route::post('/roles/{role}/permissions', [AdminRoleController::class, 'assignPermissions']);
+    Route::get('/roles/{role}/users', [AdminRoleController::class, 'getUsers']);
 
-    // Audit Logs (super admin only)
-    Route::middleware('role:super')->group(function () {
-        Route::get('/audit-logs', [AuditLogController::class, 'index']);
-        Route::get('/audit-logs/{auditLog}', [AuditLogController::class, 'show']);
-    });
+    // Prefeituras
+    Route::get('/prefeituras', [AdminPrefeituraController::class, 'index']);
+    Route::post('/prefeituras', [AdminPrefeituraController::class, 'store']);
+    Route::get('/prefeituras/{prefeitura}', [AdminPrefeituraController::class, 'show']);
+    Route::put('/prefeituras/{prefeitura}', [AdminPrefeituraController::class, 'update']);
+    Route::delete('/prefeituras/{prefeitura}', [AdminPrefeituraController::class, 'destroy']);
 
+    // Reports
+    Route::get('/reports/problemas', [DashboardController::class, 'getProblemsReport']);
+    Route::get('/reports/problemas/export', [DashboardController::class, 'exportProblemsReport']);
+    Route::get('/reports/users', [DashboardController::class, 'getUsersReport']);
+    Route::get('/reports/users/export', [DashboardController::class, 'exportUsersReport']);
+    Route::get('/audit-logs', [DashboardController::class, 'getAuditLogs']);
+    Route::get('/audit-logs/export', [DashboardController::class, 'exportAuditLogs']);
 });
 
 // ======================
