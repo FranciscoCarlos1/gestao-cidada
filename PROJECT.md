@@ -227,4 +227,4 @@ MIT License - veja [LICENSE](./LICENSE) para detalhes.
 
 ---
 
-**Última atualização:** 6 de janeiro de 2026
+**Última atualização:** 15 de janeiro de 2026

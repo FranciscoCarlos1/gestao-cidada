@@ -130,4 +130,4 @@ Tem ideias? Abra uma [Discussion](https://github.com/FranciscoCarlos1/gestao-cid
 
 ---
 
-**Última atualização:** 6 de janeiro de 2026
+**Última atualização:** 15 de janeiro de 2026
