@@ -6,7 +6,6 @@
         Este é o front-end (Vue 3) do projeto Gestão Cidadã, integrado à API Laravel.
       </p>
       <div class="row">
-        <RouterLink class="btn" to="/novo">Abrir solicitação</RouterLink>
         <RouterLink class="btn secondary" to="/problemas">Ver solicitações públicas</RouterLink>
       </div>
     </section>
